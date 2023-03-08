@@ -20,6 +20,8 @@
 # IN THE SOFTWARE.
 
 
+
+# shellcheck disable=SC2164
 cd /app
 
 fdc_test_start celery "Check Celery worker returns the correct result"
