@@ -22,6 +22,7 @@
 
 # Load our configuration
 set -a
+# shellcheck disable=SC1091
 . /etc/celery/celery.conf
 set +a
 
@@ -48,6 +49,7 @@ fi
 
 
 # Make sure we're in the correct directory before we start celery
+# shellcheck disable=SC2164
 cd /app
 
 exec /app/.venv/bin/celery --app "$CELERY_APP" --workdir /app "${ARGS[@]}"
