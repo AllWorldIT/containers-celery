@@ -20,6 +20,7 @@
 # IN THE SOFTWARE.
 
 
+# shellcheck disable=SC2034
 CELERY_APP=tasks
 CELERY_LOG_LEVEL=debug
 
