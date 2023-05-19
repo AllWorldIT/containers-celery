@@ -52,4 +52,8 @@ fi
 # shellcheck disable=SC2164
 cd /app
 
-exec /app/.venv/bin/celery --app "$CELERY_APP" --workdir /app "${ARGS[@]}"
+# Activate virtual environment
+# shellcheck disable=SC1091
+. /app/.venv/bin/activate
+
+exec celery --app "$CELERY_APP" --workdir /app "${ARGS[@]}"
