@@ -32,6 +32,9 @@ RUN set -eux; \
 	# true "Celery"; \
 	# apk add --no-cache \
 	# 	py3-celery; \
+	true "Celery deps"; \
+	apk add --no-cache \
+		tzdata; \
 	true "Celery user"; \
 	addgroup -S celery 2>/dev/null; \
 	adduser -S -D -H -h /app -s /sbin/nologin -G celery -g celery celery 2>/dev/null; \
