@@ -40,6 +40,8 @@ if [ "$CELERY_INSTANCE_TYPE" = "worker" ]; then
 elif [ "$CELERY_INSTANCE_TYPE" = "beat" ]; then
     ARGS+=("beat")
     ARGS+=("--schedule=/run/celery/celerybeat-schedule")
+elif [ "$CELERY_INSTANCE_TYPE" = "flower" ]; then
+    ARGS+=("flower")
 fi
 
 # See if we need to set the log level
@@ -56,4 +58,4 @@ cd /app
 # shellcheck disable=SC1091
 . /app/.venv/bin/activate
 
-exec celery --app "$CELERY_APP" --workdir /app "${ARGS[@]}"
+exec celery --workdir /app --app "$CELERY_APP" "${ARGS[@]}"
