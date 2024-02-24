@@ -102,6 +102,16 @@ docker run -it --rm \
     /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip install 'celery'; pip install --requirement /app/requirements.txt"
 ```
 
+In order to run flower, take note of the flower package below which is added...
+
+```sh
+docker run -it --rm \
+    -v /path/to/venv:/app/.venv \
+    -v /path/to/app/requirements.txt:/app/requirements.txt \
+    allworldit/celery \
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip install 'celery' 'flower'; pip install --requirement /app/requirements.txt"
+```
+
 
 # Health Checks
 
