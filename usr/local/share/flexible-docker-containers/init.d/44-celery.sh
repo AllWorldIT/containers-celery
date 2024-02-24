@@ -39,26 +39,13 @@ CELERY_APP="${CELERY_APP:-celery_app.celery_app}"
 # Default instance type
 CELERY_INSTANCE_TYPE="${CELERY_INSTANCE_TYPE:-worker}"
 # Check the instance type is valid
-if [ "$CELERY_INSTANCE_TYPE" != "worker" ] && [ "$CELERY_INSTANCE_TYPE" != "beat" ]; then
-	fdc_error "Invalid 'CELERY_INSTANCE_TYPE' environment variable, must be 'worker' or 'beat'"
+if [ "$CELERY_INSTANCE_TYPE" != "worker" ] && [ "$CELERY_INSTANCE_TYPE" != "beat" ] && [ "$CELERY_INSTANCE_TYPE" != "flower" ]; then
+	fdc_error "Invalid 'CELERY_INSTANCE_TYPE' environment variable, must be 'worker', 'beat' or 'flower'"
 	false
-fi
-
-# Check if we need to setup the virtualenv, this happens if we get a bind mounted blank virtualenv
-if [ ! -d /app/.venv/bin ]; then
-	fdc_notice "Creating Celery VENV"
-	python -m venv --system-site-packages /app/.venv
-	/app/.venv/bin/pip install --no-cache --upgrade pip
-
-	# If we have a requirements.txt file, ensure we install them
-	if [ -e /app/requirements.txt ]; then
-		fdc_notice "Installing Celery app depedencies"
-		/app/.venv/bin/pip install --no-cache --use-pep517 --requirement /app/requirements.txt
-	fi
 fi
 
 
 # Write out environment and fix perms of the config file
-set | grep -E '^CELERY_[A-Z_]+=' > /etc/celery/celery.conf
+set | grep -E -e '^CELERY_' -e '^FLOWER_' > /etc/celery/celery.conf
 chown root:celery /etc/celery/celery.conf
 chmod 0640 /etc/celery/celery.conf

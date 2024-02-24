@@ -29,6 +29,13 @@ cat <<EOF > /app/requirements.txt
 celery[redis]
 EOF
 
+python -m venv /app/.venv
+(
+    # shellcheck disable=SC1091
+    . /app/.venv/bin/activate
+
+    pip install -r /app/requirements.txt
+)
 
 # Add redis and start it along with supervisord, just for a easy test environment
 apk add --no-cache redis
