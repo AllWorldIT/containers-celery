@@ -58,4 +58,7 @@ cd /app
 # shellcheck disable=SC1091
 . /app/.venv/bin/activate
 
+# Add working directory to PYTHONPATH
+export PYTHONPATH="/app:$PYTHONPATH"
+
 exec celery --workdir /app --app "$CELERY_APP" "${ARGS[@]}"
