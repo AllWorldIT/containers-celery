@@ -88,19 +88,19 @@ Application directory.
 # Files & Directories
 
 
-## /app/requirements.txt
-
-If `/app/requirements.txt` exists, pip will be used to install the relevant dependencies.
-
-The virtual environment along with dependencies can be persisted using a volume for `/var/www/virtualenv`.
-
-
 ## /app/.venv/
 
-Virtual environment for the application, it will be automatically created if it doesn't exist.
+Virtual environment for the application which must be created beforehand. The requirement `celery` must be included.
 
-If it's been bind mounted as a volume, one can clear it out if required for it to be re-created on next container start.
+This can be created with...
 
+```sh
+docker run -it --rm \
+    -v /path/to/venv:/app/.venv \
+    -v /path/to/app/requirements.txt:/app/requirements.txt \
+    allworldit/celery \
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip install 'celery'; pip install --requirement /app/requirements.txt"
+```
 
 
 # Health Checks
